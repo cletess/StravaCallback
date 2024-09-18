@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strava Callback</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        #code {
+            display: block;
+            margin: 20px auto;
+            padding: 10px;
+            font-size: 18px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            max-width: 400px;
+        }
+        #copy-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Strava OAuth Callback</h1>
+    <p>If you're seeing this page, the callback has been successfully received.</p>
+    <p>Authorization Code:</p>
+    <input type="text" id="code" readonly>
+    <button id="copy-button">Copy Code</button>
+
+    <script>
+        // Extract the authorization code from the URL
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+
+            // Display the code in the input field
+            if (code) {
+                document.getElementById('code').value = code;
+            } else {
+                document.getElementById('code').value = 'No code found in the URL.';
+            }
+        };
+
+        // Function to copy the code to clipboard
+        document.getElementById('copy-button').onclick = function() {
+            const codeInput = document.getElementById('code');
+            codeInput.select();
+            codeInput.setSelectionRange(0, 99999); // For mobile devices
+
+            try {
+                document.execCommand('copy');
+                alert('Authorization code copied to clipboard!');
+            } catch (err) {
+                alert('Failed to copy code.');
+            }
+        };
+    </script>
+</body>
+</html>
